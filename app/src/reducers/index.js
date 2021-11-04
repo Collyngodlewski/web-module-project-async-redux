@@ -1,12 +1,12 @@
 import { FETCH_START, FETCH_SUCCESS, FETCH_ERROR } from "../actions";
 
     const initialState = {
-    crypto: {
-        symbol: '',
-        priceChange: '',
-        priceChangePercent: '',
-        weightedAvgPrice: '',
-        prevClosePrice: '',
+    data: {
+        "symbol": "",
+        "priceChange": "",
+        "priceChangePercent": "",
+        "weightedAvgPrice": "",
+        "prevClosePrice": "",
     },
     isFetching: false,
     error: "",
@@ -17,21 +17,21 @@ import { FETCH_START, FETCH_SUCCESS, FETCH_ERROR } from "../actions";
         case FETCH_START:
         return {
             ...state,
-            crypto: {},
+            data: {},
             isFetching: true,
             error: "",
         };
         case FETCH_SUCCESS:
         return {
             ...state,
-            crypto: action.payload,
+            data: action.payload,
             isFetching: false,
             error: "",
         };
         case FETCH_ERROR:
         return {
             ...state,
-            crypto: {},
+            data: {},
             isFetching: false,
             error: action.payload,
         };

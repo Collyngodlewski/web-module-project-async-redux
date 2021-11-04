@@ -1,19 +1,18 @@
 import axios from "axios";
 
-export const getCrypto = () => {
-    return (dispatch) => {
-        dispatch(fetchStart());
 
+export const getData = () => dispatch => {
+        dispatch(fetchStart()); 
         axios.get('https://api2.binance.com/api/v3/ticker/24hr')
         .then(resp => {
+            dispatch(fetchSuccess((resp.data[7])));
             console.log(resp.data[0]);
-            dispatch(fetchSuccess((resp.data[0])));
         })
         .catch(err => {
             dispatch(fetchError(err));
         })
     }
-}
+
 
 export const FETCH_START = "FETCH_START";
 
@@ -23,8 +22,8 @@ export const fetchStart = () => {
 
 export const FETCH_SUCCESS = "FETCH_SUCCESS";
 
-export const fetchSuccess = (person)=> {
-    return({type: FETCH_SUCCESS, payload:crypto});
+export const fetchSuccess = (data)=> {
+    return({type: FETCH_SUCCESS, payload:data});
 }
 
 export const FETCH_ERROR = "FETCH_ERROR";

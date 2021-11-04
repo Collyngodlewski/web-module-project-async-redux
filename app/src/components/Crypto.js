@@ -2,13 +2,14 @@ import axios from 'axios';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import { fetchStart, fetchSuccess, getCrypto } from './../actions';
+import { fetchStart, fetchSuccess, getData } from './../actions';
 
 
-const Crypto = ({ crypto, isFetching, error, dispatch}) =>{
+const Crypto = (props) => {
+     const { data, isFetching, error, dispatch} = props;
 
     useEffect(()=> {
-        dispatch(getCrypto());
+        getData();
     }, []);
 
 
@@ -23,7 +24,7 @@ const Crypto = ({ crypto, isFetching, error, dispatch}) =>{
         
 
         const handleClick = () => {
-            dispatch(getCrypto());
+          props.getData();
             }
         
         
@@ -31,7 +32,9 @@ const Crypto = ({ crypto, isFetching, error, dispatch}) =>{
         <>
         <div>
             <h2>Crypto here!</h2>
-            <h2>{crypto.symbol}</h2>
+            <h2> Crypto: {data.symbol} </h2>
+            <h2> Price Change: {data.priceChange} </h2>
+            <h2> Price Change Percent: {data.priceChangePercent} </h2>
             </div>
             <button onClick={handleClick}>Get Crypto data</button>
         </>
@@ -39,13 +42,13 @@ const Crypto = ({ crypto, isFetching, error, dispatch}) =>{
     
     } 
 
-    const mapStateToProps = state => {
+    const mapStateToProps = (state) => {
         return{
-            crypto: state.crypto,
+            data: state.data,
             isFetching: state.isFetching,
             error: state.error,
 
         }
     }
 
-    export default connect(mapStateToProps)(Crypto);
+    export default connect(mapStateToProps, { getData })(Crypto);
